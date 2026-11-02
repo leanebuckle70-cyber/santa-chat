@@ -386,6 +386,96 @@ document.getElementById("language").addEventListener("change", function() {
     link.textContent = link.dataset[currentLanguage];
   });
 });
+  
+function showPage(page) {
+  const pages = {
+    mailbox: {
+      title: "Santa's Mailbox ✉️",
+      text: "Write your Christmas letter to Santa!",
+      content: `
+        <textarea id="letter" placeholder="Dear Santa, this Christmas I wish for..." rows="7" style="width:100%;padding:15px;border-radius:10px;border:1px solid #ddd"></textarea>
+        <br><br>
+        <button onclick="alert('Your letter is ready for Santa! 🎅')">Send my letter 🎁</button>
+      `
+    },
+    "nice-list": {
+      title: "The Nice List ⭐",
+      text: "Kindness makes Christmas magical!",
+      content: `
+        <p>Have you done something kind today?</p>
+        <label><input type="checkbox"> I helped someone.</label><br>
+        <label><input type="checkbox"> I shared with someone.</label><br>
+        <label><input type="checkbox"> I used kind words.</label><br>
+        <label><input type="checkbox"> I helped at home.</label>
+      `
+    },
+    workshop: {
+      title: "Elf Workshop 🧝",
+      text: "Welcome to the North Pole toy workshop!",
+      content: `
+        <h3>Choose an activity</h3>
+        <p>🎨 Draw your dream Christmas toy.</p>
+        <p>🎁 Design a special present.</p>
+        <p>🎄 Make a Christmas wish list.</p>
+      `
+    },
+    reindeer: {
+      title: "Reindeer Tracker 🦌",
+      text: "Meet Santa's magical reindeer!",
+      content: `
+        <h3>Santa's Reindeer Team</h3>
+        <p>🦌 Dasher · 🦌 Dancer · 🦌 Prancer</p>
+        <p>🦌 Vixen · 🦌 Comet · 🦌 Cupid</p>
+        <p>🦌 Donner · 🦌 Blitzen · 🔴 Rudolph</p>
+        <p>They are getting ready for Christmas Eve!</p>
+      `
+    },
+    parents: {
+      title: "Parent Centre 👨‍👩‍👧",
+      text: "A safe and magical Christmas experience.",
+      content: `
+        <h3>Safety information</h3>
+        <p>Please supervise children while using Santa Chat.</p>
+        <p>Children should never share their full names, addresses, school details or contact information.</p>
+        <p>This website currently uses prepared Santa responses.</p>
+      `
+    }
+  };
+
+  const selected = pages[page];
+  if (!selected) return;
+
+  document.getElementById("chat").style.display = "none";
+  document.querySelector(".features").style.display = "none";
+
+  let panel = document.getElementById("featurePage");
+
+  if (!panel) {
+    panel = document.createElement("section");
+    panel.id = "featurePage";
+    panel.className = "chat";
+    panel.style.cssText = "padding:30px;margin:30px auto;max-width:720px;background:white;border-radius:15px";
+    document.querySelector("main").appendChild(panel);
+  }
+
+  panel.innerHTML = `
+    <h2 style="color:#123d32">${selected.title}</h2>
+    <p>${selected.text}</p>
+    ${selected.content}
+    <br><br>
+    <button onclick="backToHome()" style="background:#b52d36;color:white;border:0;padding:12px 20px;border-radius:8px">← Back to Santa Chat</button>
+  `;
+
+  panel.scrollIntoView({behavior:"smooth"});
+}
+
+function backToHome() {
+  document.getElementById("featurePage")?.remove();
+  document.getElementById("chat").style.display = "";
+  document.querySelector(".features").style.display = "";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
 </script>
 </body>
 </html>
